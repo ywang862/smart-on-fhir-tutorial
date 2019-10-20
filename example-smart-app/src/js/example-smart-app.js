@@ -17,7 +17,8 @@
                       code: {
                         $or: ['http://loinc.org|8302-2', 'http://loinc.org|8462-4',
                               'http://loinc.org|8480-6', 'http://loinc.org|2085-9',
-                              'http://loinc.org|2089-1', 'http://loinc.org|55284-4'
+                              'http://loinc.org|2089-1', 'http://loinc.org|55284-4',
+                              'http://loinc.org|29463-7'
                               ]
                       }
                     }
@@ -30,7 +31,6 @@
           var gender = patient.gender;
           var fname = '';
           var lname = '';
-
           if (typeof patient.name[0] !== 'undefined') {
             fname = patient.name[0].given.join(' ');
             lname = patient.name[0].family.join(' ');
@@ -41,13 +41,14 @@
           var diastolicbp = getBloodPressureValue(byCodes('55284-4'),'8462-4');
           var hdl = byCodes('2085-9');
           var ldl = byCodes('2089-1');
-
+          var weight = byCodes('29463-7');
           var p = defaultPatient();
           p.birthdate = patient.birthDate;
           p.gender = gender;
           p.fname = fname;
           p.lname = lname;
           p.height = getQuantityValueAndUnit(height[0]);
+          p.weight = getQuantityValueAndUnit(weight[0]);
           if (typeof systolicbp != 'undefined')  {
             p.systolicbp = systolicbp;
           }
@@ -78,6 +79,7 @@
       gender: {value: ''},
       birthdate: {value: ''},
       height: {value: ''},
+      weight: {value: '1'},
       systolicbp: {value: ''},
       diastolicbp: {value: ''},
       ldl: {value: ''},
@@ -119,6 +121,7 @@
     $('#fname').html(p.fname);
     $('#lname').html(p.lname);
     $('#gender').html(p.gender);
+    $('#weight').html(p.weight);
     $('#birthdate').html(p.birthdate);
     $('#height').html(p.height);
     $('#systolicbp').html(p.systolicbp);
